@@ -42,18 +42,6 @@ class Category(models.Model):
         return self.name
 
 
-class Rate(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    STATES = [('read', 'Read'), ('wish', 'Wish'), ('none','None')]
-    state = models.CharField(max_length=10, choices=STATES, default='none')
-    RATES = [(1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5")]
-    rate = models.CharField(max_length=1, choices=RATES)
-
-    def __str__(self):
-        return self.rate
-
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     authors = models.ManyToManyField('Author')
@@ -63,3 +51,14 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.email
 
+
+class Rate(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    STATES = [('read', 'Read'), ('wish', 'Wish'), ('none', 'None')]
+    state = models.CharField(max_length=10, choices=STATES, default='none')
+    RATES = [(1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5")]
+    rate = models.CharField(max_length=1, choices=RATES)
+
+    def __str__(self):
+        return self.rate
