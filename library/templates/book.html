@@ -1,0 +1,13 @@
+{% include 'layouts/header.html' %}
+
+<center><h3>{{ book.name }}</h3></center>
+<hr>
+<center><img class="card-img-top" src="{{book.img.url}}" alt="Card image cap" height="350" width="350"/></center>
+<pre>
+        Published at : {{book.published_at }}
+        Summary : {{ book.summary }}
+        Author : <a href=" {% url 'library:author' book.author_id %} ">{{ book.author }}</a>
+
+    </pre>
+
+{% include 'layouts/footer.html' %}

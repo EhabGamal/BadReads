@@ -1,0 +1,26 @@
+<html>
+<head>
+    <title>index</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/semantic.min.css' %}">
+
+</head>
+
+<body>
+<div class="ui fixed inverted menu">
+    <div class="ui container">
+        <a href="#" class="header item">
+            BadReads
+        </a>
+        <a href="{% url 'library:home' %}" class="item">Home</a>
+        <div class="right menu">
+            <div class="item">
+                <div class="ui transparent inverted icon input">
+                    <i class="search icon"></i>
+                    <input type="text" placeholder="Search">
+                </div>
+            </div>
+            <a href="{% url 'library:logout' %}" class="item">Logout</a>
+        </div>
+    </div>
+</div>

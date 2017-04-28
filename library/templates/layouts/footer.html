@@ -1,0 +1,17 @@
+<hr>
+<h5>ITI Django Project</h5>
+<hr>
+{% load static %}
+<script src="{% static 'js/jquery-1.11.2.js' %}"></script>
+<script src="{% static 'js/semantic.min.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        $('.ui.rating').rating();
+        $('.card .dimmer')
+            .dimmer({
+                on: 'hover'
+            });
+    })
+</script>
+</body>
+</html>

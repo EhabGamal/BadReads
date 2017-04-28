@@ -1,0 +1,35 @@
+{% include 'layouts/header.html' %}
+{% if errors %}
+<div class="alert alert-warning">
+    {% for error in errors %}
+    <li>{{ error }}</li>
+    {% endfor %}
+</div>
+{% endif%}
+<form class="form-group" method="post">
+    {% csrf_token %}
+    <p class="form-group">
+        <label for="name">User Name :</label>
+        <input type="text" name="username" placeholder="enter your name"/>
+    </p>
+
+    <p class="form-group">
+        <label for="email">Email :</label>
+        <input type="email" name="email" placeholder="enter your email"/>
+    </p>
+
+    <p class="form-group">
+        <label for="password">Password :</label>
+        <input type="password" name="password" placeholder="password"/>
+    </p>
+
+    <p class="form-group">
+        <label for="repassword">Re-type Password :</label>
+        <input type="password" name="repassword" placeholder="your password again"/>
+    </p>
+
+
+    <input type="submit" class="btn btn-primary" value="Register"/>
+</form>
+
+{% include 'layouts/footer.html' %}

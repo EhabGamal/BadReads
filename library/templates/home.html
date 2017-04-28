@@ -1,0 +1,33 @@
+{% include 'layouts/header.html' %}
+<br><br><br>
+<div class="ui container">
+    <h1>Books</h1>
+    <div class="ui five cards">
+        {% for book in books %}
+            <div class="ui card">
+                <div class="image">
+                    <div class="ui blurring dimmer">
+                        <div class="content">
+                            <div class="center">
+                                <div class="text-capitalize">{{ book.summary }}</div>
+                                <a href="{% url 'library:book' book.id %}" class="ui teal button">View Book</a>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="{{ book.img.url }}">
+                </div>
+                <div class="content">
+                    <a href="{% url 'library:book' book.id %}" class="header">{{ book.title }}</a>
+                    <div class="meta">
+                        <a class="group">{{ book.category }}</a>
+                    </div>
+                </div>
+                <div class="extra center aligned">
+                    <div  data-max-rating="5" data-rating="4" class="ui star rating"></div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% include 'layouts/footer.html' %}
