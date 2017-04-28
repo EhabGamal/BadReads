@@ -1,14 +1,15 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
-class User(models.Model):
-    name = models.CharField(max_length=255)
-    email = models.EmailField(blank=False)
-    password = models.CharField(max_length=255)
-    img = models.ImageField(upload_to='images/users/')
-
-    def __str__(self):
-        return self.name
+# class User(models.Model):
+#     name = models.CharField(max_length=255)
+#     email = models.EmailField(blank=False)
+#     password = models.CharField(max_length=255)
+#     img = models.ImageField(upload_to='images/users/')
+#
+#     def __str__(self):
+#         return self.name
 
 
 class Book(models.Model):
