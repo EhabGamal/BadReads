@@ -17,34 +17,28 @@ def index(request):
     return render(request, 'home.html', context)
 
 
+@login_required(redirect_field_name='returnURL', login_url='library:login')
 def book(request, id):
-    if not request.user.is_authenticated():
-        return redirect('library:login')
-    else:
-        book = get_object_or_404(Book, id=id)
+    book = get_object_or_404(Book, id=id)
 
-        context = {
-            'book': book,
-        }
-        return render(request, 'book.html', context)
+    context = {
+        'book': book,
+    }
+    return render(request, 'book.html', context)
 
 
+@login_required(redirect_field_name='returnURL', login_url='library:login')
 def author(request, id):
-    if not request.user.is_authenticated():
-        return redirect('library:login')
-    else:
-        author = get_object_or_404(Author, id=id)
-        context = {
-            'author': author
-        }
-        return render(request, 'author.html', context)
+    author = get_object_or_404(Author, id=id)
+    context = {
+        'author': author
+    }
+    return render(request, 'author.html', context)
 
 
+@login_required(redirect_field_name='returnURL', login_url='library:login')
 def books(request):
     q = request.GET.get('q','')
-    if not request.user.is_authenticated():
-        return redirect('library:login')
-    # books = Book.objects.all()
     books = Book.objects.filter(
         Q(title__icontains=q) |
         Q(summary__icontains=q) |
@@ -57,9 +51,8 @@ def books(request):
     return render(request, 'books.html', context)
 
 
+@login_required(redirect_field_name='returnURL', login_url='library:login')
 def authors(request):
-    if not request.user.is_authenticated():
-        return redirect('library:login')
     authors = Author.objects.all()
     context = {
         'authors': authors
@@ -111,8 +104,9 @@ def login(request):
         user = authenticate(username=email, password=password)
 
         if user is not None:
-            print(user)
             authlogin(request, user)
+            if request.GET.get('returnURL'):
+                return redirect(request.GET.get('returnURL'))
             return redirect('library:home')
         else:
             errors.append('Invalid UserName or Password')
