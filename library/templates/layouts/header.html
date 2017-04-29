@@ -12,15 +12,28 @@
         <a href="#" class="header item">
             BadReads
         </a>
-        <a href="{% url 'library:home' %}" class="item">Home</a>
+        <a href="{% url 'library:home' %}" class="item">
+            <i class="home icon"></i>
+            Home
+        </a>
+        <a href="{% url 'library:books' %}" class="item">
+            <i class="book icon"></i>
+            Books
+        </a>
+        <a href="{% url 'library:authors' %}" class="item">
+            <i class="user icon"></i>
+            Authors
+        </a>
         <div class="right menu">
-            <div class="item">
+            <form class="item" action="/books">
                 <div class="ui transparent inverted icon input">
                     <i class="search icon"></i>
-                    <input type="text" placeholder="Search">
+                    <input type="text" name="q" placeholder="Search" value="{{ request.GET.q }}">
                 </div>
-            </div>
-            <a href="{% url 'library:logout' %}" class="item">Logout</a>
+            </form>
+            <a href="{% url 'library:logout' %}" class="item">
+                Logout &nbsp;<i class="sign out icon"></i>
+            </a>
         </div>
     </div>
 </div>
