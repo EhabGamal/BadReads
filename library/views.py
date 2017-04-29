@@ -5,16 +5,17 @@ from django.contrib.auth import authenticate, login as authlogin, logout as auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password, check_password
 from django.views import generic
+from django.db.models import Q
 from .models import Book, Author
 
+@login_required(redirect_field_name='returnURL', login_url='library:login')
 def index(request):
-    if not request.user.is_authenticated():
-        return redirect('library:login')
     books = Book.objects.all()
     context = {
         'books': books
     }
     return render(request, 'home.html', context)
+
 
 def book(request, id):
     if not request.user.is_authenticated():
@@ -27,6 +28,7 @@ def book(request, id):
         }
         return render(request, 'book.html', context)
 
+
 def author(request, id):
     if not request.user.is_authenticated():
         return redirect('library:login')
@@ -36,6 +38,34 @@ def author(request, id):
             'author': author
         }
         return render(request, 'author.html', context)
+
+
+def books(request):
+    q = request.GET.get('q','')
+    if not request.user.is_authenticated():
+        return redirect('library:login')
+    # books = Book.objects.all()
+    books = Book.objects.filter(
+        Q(title__icontains=q) |
+        Q(summary__icontains=q) |
+        Q(category__name__icontains=q) |
+        Q(author__name__icontains=q)
+    )
+    context = {
+        'books': books
+    }
+    return render(request, 'books.html', context)
+
+
+def authors(request):
+    if not request.user.is_authenticated():
+        return redirect('library:login')
+    authors = Author.objects.all()
+    context = {
+        'authors': authors
+    }
+    return render(request, 'authors.html', context)
+
 
 def generate_user(name,email,password):
     user = User.objects.create_user(name,email,password)
@@ -71,6 +101,7 @@ def register(request):
                 return render(request, 'register.html')
     else:
         return render(request, 'register.html')
+
 
 def login(request):
     errors=[]
