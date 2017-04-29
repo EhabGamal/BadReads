@@ -6,10 +6,13 @@ from . import views
 app_name='library'
 
 urlpatterns = [
+    url(r'^$', views.index, name='home'),
     url(r'^home', views.index,name='home'),
-    url(r'^book/(?P<id>[0-9]+)', views.book, name='book'),
     url(r'^author/(?P<id>[0-9]+)', views.author, name='author'),
-    url(r'^$', views.login, name='login'),
+    url(r'^authors', views.authors,name='authors'),
+    url(r'^book/(?P<id>[0-9]+)', views.book, name='book'),
+    url(r'^books', views.books,name='books'),
+    url(r'login', views.login, name='login'),
     url(r'logout', views.logout, name='logout'),
     url(r'register', views.register, name='register'),
 ]
