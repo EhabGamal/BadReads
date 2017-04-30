@@ -1,23 +1,22 @@
 {% include 'layouts/header.html' %}
 
-<h3>{{ author.name }}</h3>
-<hr>
-<div class="container">
-    <div class="card" style="width: 20rem;">
-        <img class="card-img-top" src="{{author.img.url}}" alt="Card image cap" height="250" width="250"/>
-
-        <div class="card-block">
-            <p class="card-texr">
-                Born at : {{ author.born_at }}
-
-            </p>
+<div class="ui main container">
+    <div class="ui stackable grid">
+        <div class="four wide column">
+            <img src="{{ author.img.url }}" class="ui fluid image">
         </div>
-        <div class="card-block">
-            <p class="card-texr">
-
-                Died at : {{ author.died_at }}
-            </p>
+        <div class="twelve wide column">
+            <h1 class="ui header">{{ author.name }}</h1>
+            <h5>Born at: {{ author.born_at }}</h5>
+            <h5>Died at: {{ author.died_at }}</h5>
+            <div class="ui message">
+                <div class="header">
+                    Bio
+                </div>
+                <p>{{ author.bio }}</p>
+            </div>
         </div>
     </div>
 </div>
-    {% include 'layouts/footer.html' %}
+
+{% include 'layouts/footer.html' %}

@@ -1,13 +1,23 @@
 {% include 'layouts/header.html' %}
 
-<center><h3>{{ book.name }}</h3></center>
-<hr>
-<center><img class="card-img-top" src="{{book.img.url}}" alt="Card image cap" height="350" width="350"/></center>
-<pre>
-        Published at : {{book.published_at }}
-        Summary : {{ book.summary }}
-        Author : <a href=" {% url 'library:author' book.author_id %} ">{{ book.author }}</a>
-
-    </pre>
+<div class="ui main container">
+    <div class="ui stackable grid">
+        <div class="four wide column">
+            <img src="{{ book.img.url }}" class="ui fluid image">
+        </div>
+        <div class="twelve wide column">
+            <h1 class="ui header">{{ book.title }}</h1>
+            <div  data-max-rating="5" data-rating="{{ book.rate }}" data-bookid="{{ book.id }}" data-userid="{{ user.id }}" class="ui star rating left floated"></div>
+            <h3>By <a href="{% url 'library:author' book.author.id %}" class="group">{{ book.author }}</a></h3>
+            <h5>Published at: {{ book.published_at }}</h5>
+            <div class="ui message">
+                <div class="header">
+                    Summary
+                </div>
+                <p>{{ book.summary }}</p>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% include 'layouts/footer.html' %}
