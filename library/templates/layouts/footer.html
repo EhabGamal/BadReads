@@ -31,11 +31,85 @@
 <script src="{% static 'js/semantic.min.js' %}"></script>
 <script>
     $(document).ready(function() {
-        $('.ui.rating').rating();
+        $('.ui.rating')
+            .rating({
+                onRate: function (rating) {
+                    uid = $(this).data('userid');
+                    bid = $(this).data('bookid');
+                    $.ajax({
+                        type: 'POST',
+                        url: '{% url "library:api" %}',
+                        dataType: 'json',
+                        data: {
+                            csrfmiddlewaretoken: '{{ csrf_token }}',
+                            view: 'book',
+                            action: 'rate',
+                            user_id: uid,
+                            book_id: bid,
+                            rating : rating
+                        },
+                        success: function(data) {
+                            console.log(data);
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            });
         $('.card .dimmer')
             .dimmer({
                 on: 'hover'
             });
+        $('.author-btn').click(function(){
+            uid = $(this).data('userid');
+            aid = $(this).data('authorid');
+            action = $(this).data('action');
+            console.log(''+uid+' '+aid+' '+action);
+            $.ajax({
+                type: 'POST',
+                url: '{% url "library:api" %}',
+                dataType: 'json',
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    view: 'author',
+                    action: action,
+                    user_id: uid,
+                    author_id: aid
+                },
+                success: function(data) {
+                    console.log(data);
+                    location.reload();
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        })
+        $('.category-btn').click(function(){
+            uid = $(this).data('userid');
+            cid = $(this).data('categoryid');
+            action = $(this).data('action');
+            $.ajax({
+                type: 'POST',
+                url: '{% url "library:api" %}',
+                dataType: 'json',
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    view: 'category',
+                    action: action,
+                    user_id: uid,
+                    category_id: cid
+                },
+                success: function(data) {
+                    console.log(data);
+                    location.reload();
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        })
     })
 </script>
 </body>
