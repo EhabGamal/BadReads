@@ -58,6 +58,8 @@ def books(request):
         Q(category__name__icontains=q) |
         Q(author__name__icontains=q)
     )
+    for book in books:
+        book.rel = UserBooks.objects.filter(book_id=book.pk)
     context = {
         'books': books
     }
