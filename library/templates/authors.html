@@ -20,9 +20,9 @@
                 </div>
                 <div class="extra content">
                     {% if user in author.users.all %}
-                        <a href="{% url 'library:author' author.id %}" class="ui red button"><i class="remove user icon"></i>unfollow</a>
+                        <a data-authorid="{{ author.id }}" data-userid="{{ user.id }}" data-action="unfollow" class="ui red button author-btn"><i class="remove user icon"></i>unfollow</a>
                     {% else %}
-                        <a href="{% url 'library:author' author.id %}" class="ui primary button"><i class="add user icon"></i>follow</a>
+                        <a data-authorid="{{ author.id }}" data-userid="{{ user.id }}" data-action="follow" class="ui primary button author-btn"><i class="add user icon"></i>follow</a>
                     {% endif %}
                 </div>
             </div>
