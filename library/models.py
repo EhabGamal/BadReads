@@ -24,6 +24,13 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def books_count(self):
+        try:
+            return self.book_set.filter(category=self).count()
+        except:
+            return 0
+
 
 class Book(models.Model):
     title = models.CharField(max_length=100)
