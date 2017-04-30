@@ -1,11 +1,11 @@
 {% include 'layouts/header.html' %}
 
-<div class="ui container">
+<div class="ui main container">
     <h1>Authors</h1>
     <div class="ui five cards">
         {% for author in authors %}
             <div class="ui card">
-                <div class="image">
+                <div class="image" style="max-height: 200px; overflow-y:hidden">
                     <div class="ui blurring dimmer">
                         <div class="content">
                             <div class="center">
@@ -19,10 +19,11 @@
                     <a href="{% url 'library:author' author.id %}" class="header">{{ author.name }}</a>
                 </div>
                 <div class="extra content">
-                    <a href="{% url 'library:author' author.id %}" class="ui primary button">
-                        <i class="add user icon"></i>
-                        follow
-                    </a>
+                    {% if user in author.users.all %}
+                        <a href="{% url 'library:author' author.id %}" class="ui red button"><i class="remove user icon"></i>unfollow</a>
+                    {% else %}
+                        <a href="{% url 'library:author' author.id %}" class="ui primary button"><i class="add user icon"></i>follow</a>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}
