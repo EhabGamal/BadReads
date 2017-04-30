@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="extra">
-                    <div  data-max-rating="5" data-rating="{{ book.rate }}" class="ui star rating left floated"></div>
+                    <div  data-max-rating="5" data-rating="{{ book.rate }}" data-bookid="{{ book.id }}" data-userid="{{ user.id }}" class="ui star rating left floated"></div>
                     <div class="right floated"><a href="{% url 'library:home' %}"><i class="{% if book.rel or book.rel.wish %}red{% else %}remove{% endif %} bookmark icon"></i></a></div>
                     <div class="right floated"><a href="{% url 'library:home' %}"><i class="{% if book.rel or book.rel.read %}blue{% else %}{% endif %} book icon"></i></a></div>
                 </div>
