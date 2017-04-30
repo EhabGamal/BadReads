@@ -1,18 +1,22 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as authlogin, logout as authlogout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password, check_password
 from django.views import generic
 from django.db.models import Q
-from .models import Book, Author
+from .models import Book, Author, Category, UserBooks
 
 @login_required(redirect_field_name='returnURL', login_url='library:login')
 def index(request):
-    books = Book.objects.all()
+    books = UserBooks.objects.filter(user=request.user)
+    authors = Author.objects.filter(users=request.user)
+    categories = Category.objects.filter(users=request.user)
     context = {
-        'books': books
+        'books': books,
+        'authors': authors,
+        'categories': categories
     }
     return render(request, 'home.html', context)
 
@@ -37,6 +41,15 @@ def author(request, id):
 
 
 @login_required(redirect_field_name='returnURL', login_url='library:login')
+def category(request, id):
+    category = get_object_or_404(Category, id=id)
+    context = {
+        'category': category
+    }
+    return render(request, 'category.html', context)
+
+
+@login_required(redirect_field_name='returnURL', login_url='library:login')
 def books(request):
     q = request.GET.get('q','')
     books = Book.objects.filter(
@@ -58,6 +71,15 @@ def authors(request):
         'authors': authors
     }
     return render(request, 'authors.html', context)
+
+
+@login_required(redirect_field_name='returnURL', login_url='library:login')
+def categories(request):
+    categories = Category.objects.all()
+    context = {
+        'categories': categories
+    }
+    return render(request, 'categories.html', context)
 
 
 def generate_user(name,email,password):
