@@ -1,28 +1,37 @@
 {% include 'layouts/header.html' %}
 
-<div class="ui container">
-    <h1>Categories</h1>
-    <div class="ui five cards">
+<div class="ui main container">
+    <h1 class="ui center aligned header">Categories</h1>
+    <div class="ui middle aligned divided massive selection list">
         {% for category in categories %}
-            <div class="ui card">
-                <div class="image">
-                    <div class="ui blurring dimmer">
-                        <div class="content">
-                            <div class="center">
-                                <a href="" class="ui teal button">View Category</a>
+            <div class="item">
+                <div class="right floated content">
+                    {% if user in category.users.all %}
+                        <div class="ui left labeled button" tabindex="0">
+                            <a href="{% url 'library:books' %}?q={{ category.name }}" class="ui basic red right pointing label">
+                                {{ category.books_count }} Books &nbsp;
+                                <i class="book icon"></i>
+                            </a>
+                            <div class="ui red button">
+                                <i class="remove icon"></i> Unfollow
                             </div>
                         </div>
-                    </div>
-                    <img src="">
+                    {% else %}
+                        <div class="ui left labeled button" tabindex="0">
+                            <a href="{% url 'library:books' %}?q={{ category.name }}" class="ui basic green right pointing label">
+                                {{ category.books_count }} Books &nbsp;
+                                <i class="book icon"></i>
+                            </a>
+                            <div class="ui green button">
+                                <i class="add icon"></i> Follow
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
+                <i class="large bookmark icon"></i>
                 <div class="content">
                     <a href="{% url 'library:category' category.id %}" class="header">{{ category.name }}</a>
-                </div>
-                <div class="extra content">
-                    <a href="{% url 'library:category' category.id %}" class="ui primary button">
-                        <i class="add user icon"></i>
-                        follow
-                    </a>
+                    <div class="description">{{ category.desc|slice:"0:70" }}..</div>
                 </div>
             </div>
         {% endfor %}
