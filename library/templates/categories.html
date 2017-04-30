@@ -12,7 +12,7 @@
                                 {{ category.books_count }} Books &nbsp;
                                 <i class="book icon"></i>
                             </a>
-                            <div class="ui red button">
+                            <div class="ui red button category-btn" data-categoryid="{{ category.id }}" data-userid="{{ user.id }}" data-action="unfollow">
                                 <i class="remove icon"></i> Unfollow
                             </div>
                         </div>
@@ -22,7 +22,7 @@
                                 {{ category.books_count }} Books &nbsp;
                                 <i class="book icon"></i>
                             </a>
-                            <div class="ui green button">
+                            <div class="ui green button category-btn" data-categoryid="{{ category.id }}" data-userid="{{ user.id }}" data-action="follow">
                                 <i class="add icon"></i> Follow
                             </div>
                         </div>
