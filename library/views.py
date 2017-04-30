@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as authlogin, logout as authlogout
 from django.contrib.auth.models import User
@@ -82,6 +82,41 @@ def categories(request):
         'categories': categories
     }
     return render(request, 'categories.html', context)
+
+
+def api(request):
+    view = request.POST.get('view')
+    action = request.POST.get('action')
+    response = {'success':False}
+
+    if view == 'book':
+        book = Book.objects.get(pk=request.POST.get('book_id'))
+        rel, created = UserBooks.objects.get_or_create(user__id=request.POST.get('user_id'), book=book)
+        if action == 'rate':
+            rel.rate = request.POST.get('rating')
+        rel.save()
+    elif view == 'author':
+        author = Author.objects.get(pk=request.POST.get('author_id'))
+        user = User.objects.get(pk=request.POST.get('user_id'))
+        if action == 'follow':
+            author.users.add(user)
+            print('inside follow action')
+        elif action == 'unfollow':
+            author.users.remove(user)
+            print('inside unfollow action')
+        author.save()
+    elif view == 'category':
+        category = Category.objects.get(pk=request.POST.get('category_id'))
+        user = User.objects.get(pk=request.POST.get('user_id'))
+        if action == 'follow':
+            category.users.add(user)
+            print('inside follow action')
+        elif action == 'unfollow':
+            category.users.remove(user)
+            print('inside unfollow action')
+        category.save()
+
+    return JsonResponse(response)
 
 
 def generate_user(name,email,password):
